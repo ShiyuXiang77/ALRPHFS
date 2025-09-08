@@ -4,6 +4,7 @@
 <h5 align="center">
 
 [Shiyu Xiang], [Tong Zhang],[Ronghao Chen]
+
 [![arxiv](https://img.shields.io/badge/Arxiv-2502.11448-red)](https://arxiv.org/abs/2505.19260)
 
 **<font color='red'>Warning: This repo contains examples of harmful agent action</font>**
