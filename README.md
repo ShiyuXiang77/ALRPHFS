@@ -1,4 +1,4 @@
-<h2 align="center"> <a>⛓‍💥 AGrail: A Lifelong Agent Guardrail with Effective and Adaptive Safety Detection</a></h2>
+<h2 align="center"> <a>ALRPHFS: Adversarially Learned Risk Patterns with Hierarchical Fast & Slow Reasoning for Robust Agent Defense</a></h2>
 <h5 align="center"> If you like our project, please give us a star ⭐ on GitHub for latest update.  </h2>
 
 <h5 align="center">
