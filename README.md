@@ -13,7 +13,7 @@
 LLM Agents are becoming central to intelligent systems. However, their deployment raises serious safety concerns. Existing defenses largely rely on "Safety Checks", which struggle to capture the complex semantic risks posed by harmful user inputs or unsafe agent behaviors—creating a significant semantic gap between safety checks and real-world risks.
 
 To bridge this gap, we propose a novel defense framework, ALRPHFS (**A**dversarially **L**earned **R**isk **P**atterns with **H**ierarchical **F**ast & **S**low Reasoning). ALRPHFS consists of two core components: (1) an offline adversarial self-learning loop to iteratively refine a generalizable and balanced library of risk patterns, substantially enhancing robustness without retraining the base LLM, and (2) an online hierarchical fast & slow reasoning engine that balances detection effectiveness with computational efficiency. Experimental results demonstrate that our approach achieves superior overall performance compared to existing baselines, achieving a best-in-class average accuracy of 80% and exhibiting strong generalizability across tasks.
-<img src="workflow.png" width="1000"/>
+<img src="method.png" width="1000"/>
 
 ## 👻 Quick Start
 
