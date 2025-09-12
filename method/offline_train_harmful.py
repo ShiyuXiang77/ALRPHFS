@@ -8,7 +8,7 @@ from embedding import ChromaDBManager,get_embedding
 from utils import LLMClient
 from sentence_transformers import util
 from datetime import datetime
-from essence3_claude import process_item
+from risk_pattern import process_item
 import os
 from Hybrid_retrieval import HybridDBManager
 import json

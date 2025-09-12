@@ -12,6 +12,7 @@ nlp = spacy.load("en_core_web_sm")
 import pickle
 import os
 import json
+from config import API_KEY,BASE_URL
 def get_embedding(text, model="text-embedding-3-large"):
     """
     获取文本的embedding向量。
@@ -19,8 +20,8 @@ def get_embedding(text, model="text-embedding-3-large"):
     :param model: 使用的模型 (str)，默认是 text-embedding-3-large
     :return: embedding向量 (Tensor)
     """
-    client = OpenAI(api_key='',
-                    base_url='')
+    client = OpenAI(api_key=API_KEY,
+                    base_url=BASE_URL)
     try:
         response = client.embeddings.create(
             input=text,
@@ -243,7 +244,7 @@ def save_medoid_groups_to_chroma_and_bm25(
 # ——— 使用示例 ———
 if __name__ == "__main__":
     #获取原始数据
-    folder_path = "./data"
+    folder_path = "./risk_pattern_data"
     attacks = []
     # 遍历文件夹中的所有 JSON 文件
     for filename in os.listdir(folder_path):
@@ -273,14 +274,14 @@ if __name__ == "__main__":
     save_medoid_groups_to_chroma_and_bm25(
         medoid_groups=topk_medoid_groups,
         field="attack_essence",
-        persist_dir="./chroma_no_deduplicate",
+        persist_dir="./chroma",
         collection_name="attack_essence",
-        bm25_storage_path='./bm25_data_no_deduplicate',
+        bm25_storage_path='./bm25_data',
     )
     save_medoid_groups_to_chroma_and_bm25(
         medoid_groups=topk_medoid_groups,
         field="harmful_result",
-        persist_dir="./chroma_no_deduplicate",
+        persist_dir="./chroma",
         collection_name="harmful_result",
         save_bm25=False
     )

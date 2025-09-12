@@ -1,4 +1,3 @@
-
 import json
 from typing import List, Dict, Any
 import random
@@ -8,6 +7,7 @@ from utils import LLMClient
 from sentence_transformers import util
 import os
 from Hybrid_retrieval import HybridDBManager
+from config import API_KEY,BASE_URL,BM25_STORAGE_PATH,CHROMA_PERSIST_DIR,THRESOLD_LOW,THRESOLD_HIGH
 
 benign_reflect_and_optimize = """
 You are an AI safety expert tasked with improving a safety defense system to reduce false positives while maintaining strong protection against actual attacks. Your job is to analyze why a benign user query was incorrectly flagged as harmful and refine the attack essence database accordingly.
@@ -563,30 +563,24 @@ class BenignTrainer:
 
 # Usage example
 if __name__ == "__main__":
-    # Initialize shared LLM client
-    # llm_client1 = LLMClient(
-    #     api_key="sk-1AenZJt8Az8saFqCRg8dtL1LjX8Hl1CLhLh7p5zM4HGctubk",
-    #     base_url="https://api.openai-proxy.org/v1",
-    #     model="gpt-4o-2024-08-06"
-    # )
     llm_client2 = LLMClient(
-        api_key="sk-1AenZJt8Az8saFqCRg8dtL1LjX8Hl1CLhLh7p5zM4HGctubk",
-        base_url="https://api.openai-proxy.org/v1",
+        api_key=API_KEY,
+        base_url=BASE_URL,
         model="claude-3-5-haiku-20241022"
     )
     llm_client3 = LLMClient(
-        api_key="sk-F2djyHTYSLLxCqn53CBinksKRrP6km7onwkVahtgDcudpMqL",
-        base_url="https://happyapi.org/v1",
+        api_key=API_KEY,
+        base_url=BASE_URL,
         model="claude-3-5-haiku-20241022"
     )
     # Initialize database managers
     db_manager1=HybridDBManager(
         collection_name="attack_essence",
-        persist_dir=r"C:\Users\prejudice\Desktop\agent_safety\our_work_third\backup\Claude3-5\chroma_deduplicate_train",
+        persist_dir=CHROMA_PERSIST_DIR,
         alpha=0.3,
-        bm25_storage_path=r'C:\Users\prejudice\Desktop\agent_safety\our_work_third\backup\Claude3-5\bm25_data_deduplicate_train'
+        bm25_storage_path=BM25_STORAGE_PATH
     )
-    db_manager2 = ChromaDBManager(collection_name="harmful_result",persist_dir = r"C:\Users\prejudice\Desktop\agent_safety\our_work_third\backup\Claude3-5\chroma_deduplicate_train")
+    db_manager2 = ChromaDBManager(collection_name="harmful_result",persist_dir =CHROMA_PERSIST_DIR)
     # Initialize Blue Team security evaluator
     blue_evaluator = SecurityEvaluator(
         llm_client=llm_client3,
@@ -595,19 +589,13 @@ if __name__ == "__main__":
         threshold_low=0.4,
         enable_guardrail=True,
     )
-    # llm_client = LLMClient(
-    #     api_key="06af1a7b94a042c2b43b7f036e54f4fb.KjbhEF4evnFzQdKQ",
-    #     base_url="https://open.bigmodel.cn/api/paas/v4/",
-    #     model="glm-4-plus"
-    # )
-    # Create the adversarial trainer with injected dependencies
     trainer = BenignTrainer(
         llm_client=llm_client2,
         red_db_manager=db_manager2,
         blue_evaluator=blue_evaluator,
         max_retry_attempts=2,
     )
-    file_path = r"C:\Users\prejudice\Desktop\agent_safety\our_work_third\Claude3-5\train_history\benign\safe_unintended.json"
+    file_path = "./train_history/benign/safe.json"
     # Seed query to begin training
     with open(file_path, 'r', encoding='utf-8') as f:
         data = json.load(f)
@@ -622,6 +610,4 @@ if __name__ == "__main__":
             json.dump(data, f, ensure_ascii=False, indent=4)
         print(f"Training progress: {i+1}/{len(data)}")
 
-
-    # print(json.dumps(metrics, indent=2))
 

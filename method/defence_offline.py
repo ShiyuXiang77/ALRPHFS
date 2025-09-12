@@ -4,7 +4,7 @@ import logging
 from typing import Dict, Any, List, Tuple, Optional, Union
 from openai import OpenAI
 import sys
-sys.path.append('../environments')
+sys.path.append('./environments')
 from embedding import ChromaDBManager
 from EnvManager import EnvManager
 import time
