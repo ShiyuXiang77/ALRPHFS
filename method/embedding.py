@@ -8,6 +8,7 @@ import json
 from openai import OpenAI
 import torch
 from sentence_transformers import util
+from config import API_KEY,BASE_URL
 def get_embedding(text, model="text-embedding-3-large"):
     """
     获取文本的embedding向量。
@@ -15,21 +16,21 @@ def get_embedding(text, model="text-embedding-3-large"):
     :param model: 使用的模型 (str)，默认是 text-embedding-3-large
     :return: embedding向量 (Tensor)
     """
-    client = OpenAI(api_key='sk-1AenZJt8Az8saFqCRg8dtL1LjX8Hl1CLhLh7p5zM4HGctubk',
-                    base_url='https://api.openai-proxy.org/v1')
+    client = OpenAI(api_key=API_KEY,
+                    base_url=BASE_URL)
     try:
         response = client.embeddings.create(
             input=text,
             model=model
 
         )
-        embedding = response.data[0].embedding  # 注意这里用 .data[0].embedding
-        return embedding         # 直接转成Tensor，方便后续相似度计算
+        embedding = response.data[0].embedding 
+        return embedding         
     except Exception as e:
         print(f"OpenAI API 请求出错了: {e}")
         return None
 class ChromaDBManager:
-    def __init__(self, collection_name: str="my_json_collection", persist_dir: str = "./chroma_test"):
+    def __init__(self, collection_name: str="my_json_collection", persist_dir: str = "./chroma"):
         self.client = chromadb.Client(Settings(persist_directory=persist_dir, anonymized_telemetry=False))
 
         # Create or load collection
